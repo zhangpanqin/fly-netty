@@ -1,0 +1,52 @@
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
+pluginManagement {
+    repositories {
+        mavenLocal()
+        maven {
+            url = 'https://maven.aliyun.com/repository/gradle-plugin'
+        }
+        gradlePluginPortal()
+    }
+    plugins {
+        id 'org.springframework.boot' version "${spring_boot_version}"
+        id 'io.spring.dependency-management' version "${dependency_management_version}"
+        id 'org.unbroken-dome.test-sets' version "${test_sets_plugin_version}"
+        id 'com.github.spotbugs-base' version "${spotbugs_plugin_version}"
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenLocal()
+        maven {
+            url 'https://maven.aliyun.com/repository/public/'
+        }
+    }
+
+    versionCatalogs {
+        libs {
+            version('mapstruct', '1.5.5.Final')
+            version('openapi', '1.8.0')
+            version('lombok-mapstruct-binding', '0.2.0')
+            version('spring-cloud-alibaba-dependencies', '2021.0.5.0')
+            version('spring-cloud-dependencies', '2021.0.5')
+            version('alibaba-p3c-pmd', '2.1.1')
+            library('mapstruct-core', 'org.mapstruct', 'mapstruct').versionRef('mapstruct')
+            library('mapstruct-processor', 'org.mapstruct', 'mapstruct-processor').versionRef('mapstruct')
+            library('lombok-mapstruct-binding', 'org.projectlombok', 'lombok-mapstruct-binding').versionRef('lombok-mapstruct-binding')
+            library('openapi', 'org.springdoc', 'springdoc-openapi-ui').versionRef('openapi')
+            library('spring-cloud-alibaba-dependencies', 'com.alibaba.cloud', 'spring-cloud-alibaba-dependencies')
+                    .versionRef('spring-cloud-alibaba-dependencies')
+            library('spring-cloud-dependencies', 'org.springframework.cloud', 'spring-cloud-dependencies')
+                    .versionRef('spring-cloud-dependencies')
+            library('alibaba.p3c', 'com.alibaba.p3c', 'p3c-pmd')
+                    .versionRef('alibaba-p3c-pmd')
+        }
+    }
+}
+
+rootProject.name = 'fly-springboot2_7-template'
+include 'demo'
+
