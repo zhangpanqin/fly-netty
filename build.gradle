@@ -12,11 +12,11 @@ plugins {
 version = '0.0.1-SNAPSHOT'
 
 allprojects {
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(8)
-        }
-    }
+//    java {
+//        toolchain {
+//            languageVersion = JavaLanguageVersion.of(8)
+//        }
+//    }
     group = "${global_group}"
 }
 

@@ -47,6 +47,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = 'fly-springboot2_7-template'
+rootProject.name = 'fly-netty'
 include 'demo'
+include 'netty-demo'
 

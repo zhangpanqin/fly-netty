@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.mflyyou'
+version = '1.0-SNAPSHOT'
+
+
+
+dependencies {
+    // https://mvnrepository.com/artifact/io.netty/netty-all
+    implementation 'io.netty:netty-all:4.1.116.Final'
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
