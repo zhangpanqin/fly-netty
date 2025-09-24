@@ -51,3 +51,5 @@ rootProject.name = 'fly-netty'
 include 'demo'
 include 'netty-demo'
 
+
+include 'custom-protocol'
