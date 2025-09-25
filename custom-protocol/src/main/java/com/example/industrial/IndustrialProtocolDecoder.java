@@ -39,34 +39,25 @@ public class IndustrialProtocolDecoder extends ByteToMessageDecoder {
 
         ByteBuf data = in.readRetainedSlice(dataLength);
 
-
-        // 将当前帧（不含起始符）复制到字节数组用于 CRC 校验
-        byte[] frame = new byte[1 + 1 + 2 + dataLength]; // deviceId + command + length + data
-        frame[0] = deviceId;
-        frame[1] = command;
-        frame[2] = (byte) (dataLength >> 8);        // 高位
-        frame[3] = (byte) (dataLength & 0xFF);      // 低位
-        data.getBytes(0, frame, 4, dataLength);
-
         // 读取数据域后，准备验证 CRC
         byte[] crcData = new byte[1 + 1 + 2 + dataLength]; // deviceId + command + length + data
 
-// 手动复制参与 CRC 计算的字节
+        // 手动复制参与 CRC 计算的字节
         crcData[0] = deviceId;
         crcData[1] = command;
         crcData[2] = (byte) (dataLength >> 8);        // 高位
         crcData[3] = (byte) (dataLength & 0xFF);      // 低位
         data.getBytes(0, crcData, 4, dataLength);
 
-// 计算 CRC
+        // 计算 CRC
         int calculatedCrc = CRC16Util.crc16(crcData, 0, crcData.length);
 
-// 读取接收到的 CRC（低字节在前 → 小端）
+        // 读取接收到的 CRC（低字节在前 → 小端）
         int receivedCrcLow = in.readUnsignedByte();
         int receivedCrcHigh = in.readUnsignedByte();
         int receivedCrc = (receivedCrcHigh << 8) | receivedCrcLow; // 组合成大端值
 
-// 比较
+        // 比较
         if (receivedCrc != calculatedCrc) {
             data.release();
             throw new IllegalArgumentException(
